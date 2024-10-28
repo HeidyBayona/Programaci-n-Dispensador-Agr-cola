@@ -1,0 +1,117 @@
+#include <SoftwareSerial.h>
+//SoftwareSerial  EEBlue(0, 1); // RX | TX
+
+int Sustancia1 = 4;
+int Sustancia2 = 5;
+int Sustancia3 = 6;
+int Sustancia4 = 7;
+int dt = 800;
+int Estado = 0;
+int  TiempoBombas = 500;
+
+
+void setup() {
+  Serial.begin(9600);
+  Serial.println("Conectar al HC-05 desde cualquier otro dispositivo bluetooth con 1234 como clave de emparejamiento.");
+  pinMode(4, OUTPUT);
+  pinMode(5, OUTPUT);
+  pinMode(6, OUTPUT);
+  pinMode(7, OUTPUT);
+  digitalWrite(4, HIGH);
+  digitalWrite(5, HIGH);
+  digitalWrite(6, HIGH);
+  digitalWrite(7, HIGH);
+}
+
+void loop()
+
+{
+  if (Serial.available()  > 0) {
+    Estado = Serial.read();
+    Serial.println(Estado);
+  }
+
+
+//Orden del apartado Mix: 1. Sustancia1; 2. Sustancia2; 3. Sustancia3; 4. Sustancia4.
+    
+//Sustancias opcionales.
+
+  //Poción 1 
+  if (Estado == 'a') {
+    Serial.println("Pocion 1 está preparándose...");
+    Mix(0, 0, 0, 0);
+  }
+
+  //Poción 2
+  if (Estado == 'b') {
+    Serial.println("Pocion 2 está preparándose...");
+    Mix(0, 0, 0, 0);
+  }
+
+
+  //Poción 3
+  if (Estado  == 'c') {
+    Serial.println("Pocion 3 está preparándose...");
+    Mix(0, 0, 0, 0);
+  }
+
+  //Poción 4
+  if (Estado == 'd') {
+    Serial.println("Pocion 4 está preparándose...");
+    Mix(0, 0, 0, 0);
+  }
+
+    
+  // Sustancias Base
+
+  //Poción 5
+  if (Estado == 'e') {
+    Serial.println("Pocion 5 está preparándose...");
+    Mix(1100, 0, 0, 0);
+  }
+
+  //Poción 6
+  if  (Estado == 'f') {
+    Serial.println("Pocion 6 está preparándose...");
+    Mix(0, 1100, 0, 0);
+  }
+
+  //Poción 7
+  if (Estado == 'g') {
+    Serial.println("Pocion 7 está preparándose...");
+    Mix(0, 0, 1100, 0);
+  }
+
+  //Poción 8
+  if (Estado == 'h') {
+    Serial.println("Pocion 8 está preparándose...");
+    Mix(0, 0, 0, 1100);
+  }
+}
+
+void  Mix(int DelayTimeSustancia1, int DelayTimeSustancia2, int DelayTimeSustancia3, int  DelayTimeSustancia4) {
+
+  Estado = 0;
+  delay(dt);
+  digitalWrite(Sustancia1,  LOW);
+  delay(DelayTimeSustancia1);
+  digitalWrite(Sustancia1, HIGH);
+  delay(TiempoBombas);
+
+  digitalWrite(Sustancia2, LOW);
+  delay(DelayTimeSustancia2);
+  digitalWrite(Sustancia2, HIGH);
+  delay(TiempoBombas);
+
+  digitalWrite(Sustancia3, LOW);
+  delay(DelayTimeSustancia3);
+  digitalWrite(Sustancia3, HIGH);
+  delay(TiempoBombas);
+
+  digitalWrite(Sustancia4, LOW);
+  delay(DelayTimeSustancia4);
+  digitalWrite(Sustancia4,  HIGH);
+  delay(TiempoBombas);
+  Serial.println("¡Mezcla terminada! :)");
+  Estado = 0;
+}
